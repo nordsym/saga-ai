@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saga.ai | App UI Mockup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'saga-orange': '#FF6B35',
+                        'saga-purple': '#7B2CBF',
+                        'saga-cyan': '#00D4FF',
+                        'saga-yellow': '#FFD23F',
+                        'saga-red': '#E63946',
+                        'deep': '#0A0A0F',
+                        'surface': '#14141F',
+                        'surface-light': '#1E1E2E',
+                    },
+                    fontFamily: {
+                        'impact': ['Bangers', 'cursive'],
+                        'body': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .comic-shadow {
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+        }
+        .impact-text {
+            transform: rotate(-3deg);
+            animation: pulse-impact 0.5s ease-in-out infinite alternate;
+        }
+        @keyframes pulse-impact {
+            from { transform: rotate(-3deg) scale(1); }
+            to { transform: rotate(-3deg) scale(1.05); }
+        }
+        .speed-lines {
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 10px,
+                rgba(255,107,53,0.1) 10px,
+                rgba(255,107,53,0.1) 12px
+            );
+        }
+        .glow-orange { box-shadow: 0 0 30px rgba(255,107,53,0.4); }
+        .glow-purple { box-shadow: 0 0 30px rgba(123,44,191,0.4); }
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        .step-indicator.active {
+            background: linear-gradient(135deg, #FF6B35, #7B2CBF);
+        }
+        .character-card:hover {
+            transform: translateY(-4px) rotate(1deg);
+        }
+        .action-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                transparent,
+                rgba(255,255,255,0.1),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+    </style>
+</head>
+<body class="bg-deep text-white font-body min-h-screen">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="font-impact text-3xl text-saga-orange comic-shadow">SAGA</span>
+                <span class="text-saga-cyan text-sm font-medium">.ai</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span class="text-white/60 text-sm">gustav@nordsym.com</span>
+                <div class="w-9 h-9 rounded-full bg-gradient-to-br from-saga-orange to-saga-purple flex items-center justify-center font-bold">G</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Step Indicator -->
+    <div class="fixed top-20 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 glass rounded-full px-4 py-2">
+        <button onclick="showStep(1)" class="step-indicator active w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold" data-step="1">1</button>
+        <div class="w-8 h-0.5 bg-white/20"></div>
+        <button onclick="showStep(2)" class="step-indicator w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold" data-step="2">2</button>
+        <div class="w-8 h-0.5 bg-white/20"></div>
+        <button onclick="showStep(3)" class="step-indicator w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold" data-step="3">3</button>
+        <div class="w-8 h-0.5 bg-white/20"></div>
+        <button onclick="showStep(4)" class="step-indicator w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold" data-step="4">4</button>
+        <div class="w-8 h-0.5 bg-white/20"></div>
+        <button onclick="showStep(5)" class="step-indicator w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-bold" data-step="5">5</button>
+    </div>
+
+    <!-- STEP 1: Characters -->
+    <section id="step-1" class="step-section pt-36 pb-20 px-6 min-h-screen">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h1 class="font-impact text-4xl comic-shadow mb-2">YOUR PARTY</h1>
+                    <p class="text-white/60">The heroes of your saga</p>
+                </div>
+                <button class="action-btn bg-gradient-to-r from-saga-orange to-saga-purple px-6 py-3 rounded-xl font-semibold flex items-center gap-2 glow-orange">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Add Character
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Character 1 -->
+                <div class="character-card glass rounded-2xl p-4 cursor-pointer transition-all duration-300">
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-saga-red/20 to-saga-orange/20 mb-4 flex items-center justify-center overflow-hidden relative">
+                        <div class="absolute inset-0 speed-lines opacity-50"></div>
+                        <svg class="w-24 h-24 text-saga-orange/60" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                        <span class="absolute top-2 right-2 bg-saga-red px-2 py-0.5 rounded text-xs font-bold">TANK</span>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow">THORIN</h3>
+                    <p class="text-white/50 text-sm">Dwarf Fighter • Level 8</p>
+                    <div class="flex gap-1 mt-2">
+                        <span class="bg-saga-red/20 text-saga-red text-xs px-2 py-0.5 rounded">Brave</span>
+                        <span class="bg-saga-orange/20 text-saga-orange text-xs px-2 py-0.5 rounded">Loyal</span>
+                    </div>
+                </div>
+
+                <!-- Character 2 -->
+                <div class="character-card glass rounded-2xl p-4 cursor-pointer transition-all duration-300">
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-saga-purple/20 to-saga-cyan/20 mb-4 flex items-center justify-center overflow-hidden relative">
+                        <div class="absolute inset-0 speed-lines opacity-50"></div>
+                        <svg class="w-24 h-24 text-saga-purple/60" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                        <span class="absolute top-2 right-2 bg-saga-purple px-2 py-0.5 rounded text-xs font-bold">MAGE</span>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow">LYRA</h3>
+                    <p class="text-white/50 text-sm">Elf Sorcerer • Level 8</p>
+                    <div class="flex gap-1 mt-2">
+                        <span class="bg-saga-purple/20 text-saga-purple text-xs px-2 py-0.5 rounded">Wise</span>
+                        <span class="bg-saga-cyan/20 text-saga-cyan text-xs px-2 py-0.5 rounded">Curious</span>
+                    </div>
+                </div>
+
+                <!-- Character 3 -->
+                <div class="character-card glass rounded-2xl p-4 cursor-pointer transition-all duration-300">
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-saga-yellow/20 to-saga-orange/20 mb-4 flex items-center justify-center overflow-hidden relative">
+                        <div class="absolute inset-0 speed-lines opacity-50"></div>
+                        <svg class="w-24 h-24 text-saga-yellow/60" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                        <span class="absolute top-2 right-2 bg-saga-yellow text-black px-2 py-0.5 rounded text-xs font-bold">ROGUE</span>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow">SHADE</h3>
+                    <p class="text-white/50 text-sm">Tiefling Rogue • Level 7</p>
+                    <div class="flex gap-1 mt-2">
+                        <span class="bg-saga-yellow/20 text-saga-yellow text-xs px-2 py-0.5 rounded">Cunning</span>
+                        <span class="bg-white/10 text-white/60 text-xs px-2 py-0.5 rounded">Secretive</span>
+                    </div>
+                </div>
+
+                <!-- Character 4 -->
+                <div class="character-card glass rounded-2xl p-4 cursor-pointer transition-all duration-300">
+                    <div class="aspect-square rounded-xl bg-gradient-to-br from-saga-cyan/20 to-white/10 mb-4 flex items-center justify-center overflow-hidden relative">
+                        <div class="absolute inset-0 speed-lines opacity-50"></div>
+                        <svg class="w-24 h-24 text-saga-cyan/60" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                        <span class="absolute top-2 right-2 bg-saga-cyan text-black px-2 py-0.5 rounded text-xs font-bold">HEALER</span>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow">SERA</h3>
+                    <p class="text-white/50 text-sm">Human Cleric • Level 8</p>
+                    <div class="flex gap-1 mt-2">
+                        <span class="bg-saga-cyan/20 text-saga-cyan text-xs px-2 py-0.5 rounded">Kind</span>
+                        <span class="bg-white/10 text-white/60 text-xs px-2 py-0.5 rounded">Steadfast</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 flex justify-end">
+                <button onclick="showStep(2)" class="action-btn bg-gradient-to-r from-saga-orange to-saga-purple px-8 py-3 rounded-xl font-semibold glow-orange">
+                    Continue to Scene →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEP 2: Prompt -->
+    <section id="step-2" class="step-section hidden pt-36 pb-20 px-6 min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-8">
+                <h1 class="font-impact text-4xl comic-shadow mb-2">WHAT HAPPENS NEXT?</h1>
+                <p class="text-white/60">Describe the scene. Be dramatic.</p>
+            </div>
+
+            <div class="glass rounded-2xl p-6 mb-6">
+                <label class="text-white/60 text-sm mb-2 block">Scene Description</label>
+                <textarea
+                    class="w-full bg-transparent border-none outline-none text-xl resize-none h-32 placeholder-white/30"
+                    placeholder="The party bursts through the tavern door as flames engulf the building behind them. Three assassins block the alley ahead, blades gleaming in the firelight..."
+                ></textarea>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <button class="glass rounded-xl p-4 text-left hover:bg-white/5 transition-colors">
+                    <span class="text-saga-red font-impact text-lg">COMBAT</span>
+                    <p class="text-white/50 text-xs mt-1">Fight scene</p>
+                </button>
+                <button class="glass rounded-xl p-4 text-left hover:bg-white/5 transition-colors">
+                    <span class="text-saga-orange font-impact text-lg">CHASE</span>
+                    <p class="text-white/50 text-xs mt-1">Pursuit & escape</p>
+                </button>
+                <button class="glass rounded-xl p-4 text-left hover:bg-white/5 transition-colors">
+                    <span class="text-saga-purple font-impact text-lg">MAGIC</span>
+                    <p class="text-white/50 text-xs mt-1">Spells & power</p>
+                </button>
+                <button class="glass rounded-xl p-4 text-left hover:bg-white/5 transition-colors">
+                    <span class="text-saga-cyan font-impact text-lg">DRAMA</span>
+                    <p class="text-white/50 text-xs mt-1">Tension & reveal</p>
+                </button>
+            </div>
+
+            <div class="glass rounded-xl p-4 mb-8">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-white/60 text-sm">Featured Characters</span>
+                    <span class="text-white/40 text-xs">Click to toggle</span>
+                </div>
+                <div class="flex gap-3">
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-saga-red to-saga-orange ring-2 ring-saga-orange ring-offset-2 ring-offset-deep cursor-pointer"></div>
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-saga-purple to-saga-cyan ring-2 ring-saga-purple ring-offset-2 ring-offset-deep cursor-pointer"></div>
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-saga-yellow to-saga-orange opacity-40 cursor-pointer"></div>
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-saga-cyan to-white opacity-40 cursor-pointer"></div>
+                </div>
+            </div>
+
+            <div class="flex justify-between">
+                <button onclick="showStep(1)" class="px-6 py-3 rounded-xl font-semibold text-white/60 hover:text-white transition-colors">
+                    ← Back
+                </button>
+                <button onclick="showStep(3)" class="action-btn bg-gradient-to-r from-saga-orange to-saga-purple px-8 py-3 rounded-xl font-semibold glow-orange flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    Generate Scene
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEP 3: Generating -->
+    <section id="step-3" class="step-section hidden pt-36 pb-20 px-6 min-h-screen flex items-center justify-center">
+        <div class="text-center">
+            <div class="relative inline-block mb-8">
+                <div class="w-32 h-32 rounded-full border-4 border-saga-orange/30 border-t-saga-orange animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="font-impact text-2xl text-saga-orange comic-shadow impact-text">POW!</span>
+                </div>
+            </div>
+            <h2 class="font-impact text-3xl comic-shadow mb-4">GENERATING YOUR SCENE...</h2>
+            <div class="space-y-2 text-white/60">
+                <p class="flex items-center justify-center gap-2">
+                    <span class="w-2 h-2 bg-saga-orange rounded-full animate-pulse"></span>
+                    Analyzing character dynamics
+                </p>
+                <p class="flex items-center justify-center gap-2">
+                    <span class="w-2 h-2 bg-saga-purple rounded-full animate-pulse"></span>
+                    Choreographing action sequences
+                </p>
+                <p class="flex items-center justify-center gap-2">
+                    <span class="w-2 h-2 bg-saga-cyan rounded-full animate-pulse"></span>
+                    Adding comic impact frames
+                </p>
+            </div>
+            <button onclick="showStep(4)" class="mt-8 text-saga-orange hover:underline text-sm">[Demo: Skip to result]</button>
+        </div>
+    </section>
+
+    <!-- STEP 4: Episode Result -->
+    <section id="step-4" class="step-section hidden pt-36 pb-20 px-6 min-h-screen">
+        <div class="max-w-5xl mx-auto">
+            <!-- Video Player Mockup -->
+            <div class="relative rounded-2xl overflow-hidden mb-6 bg-surface aspect-video">
+                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-saga-orange/20 via-saga-purple/20 to-saga-cyan/20">
+                    <!-- Comic style scene mockup -->
+                    <div class="relative">
+                        <span class="absolute -top-16 -left-20 font-impact text-6xl text-saga-orange comic-shadow impact-text rotate-[-15deg]">KRAKOOM!</span>
+                        <span class="absolute -bottom-12 -right-16 font-impact text-4xl text-saga-yellow comic-shadow rotate-[10deg]">SLASH!</span>
+                        <div class="w-24 h-24 rounded-full bg-white/10 flex items-center justify-center cursor-pointer hover:bg-white/20 transition-colors">
+                            <svg class="w-12 h-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                        </div>
+                    </div>
+                </div>
+                <!-- Progress bar -->
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+                    <div class="flex items-center gap-4">
+                        <span class="text-sm">0:00</span>
+                        <div class="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+                            <div class="w-0 h-full bg-saga-orange rounded-full"></div>
+                        </div>
+                        <span class="text-sm">0:47</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Episode Info -->
+            <div class="glass rounded-2xl p-6 mb-6">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <span class="text-saga-orange text-sm font-medium">Episode 7</span>
+                        <h2 class="font-impact text-2xl comic-shadow">FLAMES OF BETRAYAL</h2>
+                        <p class="text-white/50 mt-1">The party escapes the burning tavern only to face hired killers</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="glass px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        </button>
+                        <button class="glass px-4 py-2 rounded-lg hover:bg-white/10 transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <span class="bg-saga-red/20 text-saga-red text-xs px-2 py-1 rounded">Combat</span>
+                    <span class="bg-saga-orange/20 text-saga-orange text-xs px-2 py-1 rounded">Chase</span>
+                    <span class="text-white/40 text-xs px-2 py-1">47 seconds</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between">
+                <button onclick="showStep(2)" class="px-6 py-3 rounded-xl font-semibold text-white/60 hover:text-white transition-colors">
+                    ← Regenerate
+                </button>
+                <button onclick="showStep(5)" class="action-btn bg-gradient-to-r from-saga-orange to-saga-purple px-8 py-3 rounded-xl font-semibold glow-orange">
+                    Save to Campaign →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEP 5: Series/Campaign -->
+    <section id="step-5" class="step-section hidden pt-36 pb-20 px-6 min-h-screen">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <span class="text-saga-purple text-sm font-medium">Campaign</span>
+                    <h1 class="font-impact text-4xl comic-shadow">THE CRIMSON THRONE</h1>
+                    <p class="text-white/60">7 episodes • 12 min total runtime</p>
+                </div>
+                <button class="action-btn bg-gradient-to-r from-saga-orange to-saga-purple px-6 py-3 rounded-xl font-semibold glow-orange flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    Play All
+                </button>
+            </div>
+
+            <!-- Episode Timeline -->
+            <div class="space-y-4">
+                <div class="glass rounded-xl p-4 flex gap-4 items-center opacity-60">
+                    <div class="w-32 h-20 rounded-lg bg-gradient-to-br from-saga-purple/30 to-saga-cyan/30 flex-shrink-0 flex items-center justify-center">
+                        <span class="font-impact text-white/40">EP 1</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-impact text-lg">THE GATHERING</h3>
+                        <p class="text-white/50 text-sm">Four strangers meet in a tavern...</p>
+                    </div>
+                    <span class="text-white/40 text-sm">1:23</span>
+                </div>
+
+                <div class="glass rounded-xl p-4 flex gap-4 items-center opacity-60">
+                    <div class="w-32 h-20 rounded-lg bg-gradient-to-br from-saga-orange/30 to-saga-red/30 flex-shrink-0 flex items-center justify-center">
+                        <span class="font-impact text-white/40">EP 2</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-impact text-lg">FIRST BLOOD</h3>
+                        <p class="text-white/50 text-sm">The party's first battle together</p>
+                    </div>
+                    <span class="text-white/40 text-sm">2:05</span>
+                </div>
+
+                <div class="glass rounded-xl p-4 flex gap-4 items-center opacity-60">
+                    <div class="w-32 h-20 rounded-lg bg-gradient-to-br from-saga-cyan/30 to-saga-purple/30 flex-shrink-0 flex items-center justify-center">
+                        <span class="font-impact text-white/40">EP 3-6</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-impact text-lg text-white/50">...</h3>
+                        <p class="text-white/40 text-sm">Previous episodes</p>
+                    </div>
+                    <span class="text-white/40 text-sm">7:24</span>
+                </div>
+
+                <!-- Current episode highlighted -->
+                <div class="glass rounded-xl p-4 flex gap-4 items-center ring-2 ring-saga-orange glow-orange">
+                    <div class="w-32 h-20 rounded-lg bg-gradient-to-br from-saga-orange/50 to-saga-red/50 flex-shrink-0 flex items-center justify-center relative overflow-hidden">
+                        <span class="font-impact text-white">EP 7</span>
+                        <span class="absolute top-1 right-1 bg-saga-orange text-xs px-1.5 py-0.5 rounded font-bold">NEW</span>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-impact text-lg text-saga-orange">FLAMES OF BETRAYAL</h3>
+                        <p class="text-white/60 text-sm">The party escapes the burning tavern</p>
+                    </div>
+                    <span class="text-white/60 text-sm">0:47</span>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <button onclick="showStep(2)" class="action-btn bg-gradient-to-r from-saga-purple to-saga-cyan px-8 py-3 rounded-xl font-semibold glow-purple">
+                    + Create Next Episode
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function showStep(num) {
+            // Hide all sections
+            document.querySelectorAll('.step-section').forEach(s => s.classList.add('hidden'));
+            // Show target section
+            document.getElementById(`step-${num}`).classList.remove('hidden');
+            // Update indicators
+            document.querySelectorAll('.step-indicator').forEach(ind => {
+                ind.classList.remove('active');
+                if (parseInt(ind.dataset.step) === num) {
+                    ind.classList.add('active');
+                }
+            });
+            // Animate in
+            gsap.from(`#step-${num}`, { opacity: 0, y: 20, duration: 0.4, ease: "power2.out" });
+        }
+    </script>
+</body>
+</html>

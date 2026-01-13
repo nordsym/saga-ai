@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saga.ai | Turn Your Adventures Into Animated Series</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'saga-orange': '#FF6B35',
+                        'saga-purple': '#7B2CBF',
+                        'saga-cyan': '#00D4FF',
+                        'saga-yellow': '#FFD23F',
+                        'saga-red': '#E63946',
+                        'deep': '#0A0A0F',
+                        'surface': '#14141F',
+                    },
+                    fontFamily: {
+                        'impact': ['Bangers', 'cursive'],
+                        'body': ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .comic-shadow {
+            text-shadow: 4px 4px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+        }
+        .comic-shadow-sm {
+            text-shadow: 2px 2px 0 #000;
+        }
+        .glow-orange { box-shadow: 0 0 40px rgba(255,107,53,0.5); }
+
+        .float-1 { animation: float1 6s ease-in-out infinite; }
+        .float-2 { animation: float2 8s ease-in-out infinite; }
+        .float-3 { animation: float3 7s ease-in-out infinite; }
+
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0) rotate(-12deg); }
+            50% { transform: translateY(-20px) rotate(-8deg); }
+        }
+        @keyframes float2 {
+            0%, 100% { transform: translateY(0) rotate(8deg); }
+            50% { transform: translateY(-15px) rotate(12deg); }
+        }
+        @keyframes float3 {
+            0%, 100% { transform: translateY(0) rotate(5deg); }
+            50% { transform: translateY(-25px) rotate(-2deg); }
+        }
+
+        .speed-lines {
+            background: repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 20px,
+                rgba(255,107,53,0.03) 20px,
+                rgba(255,107,53,0.03) 22px
+            );
+        }
+
+        .hero-glow {
+            background: radial-gradient(ellipse at center, rgba(255,107,53,0.15) 0%, transparent 60%);
+        }
+
+        .action-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg) translateX(-100%);
+            transition: transform 0.6s;
+        }
+        .action-btn:hover::after {
+            transform: rotate(45deg) translateX(100%);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,107,53,0.3);
+        }
+
+        .comic-panel {
+            clip-path: polygon(2% 0%, 100% 0%, 98% 100%, 0% 100%);
+        }
+    </style>
+</head>
+<body class="bg-deep text-white font-body overflow-x-hidden">
+
+    <!-- Nav -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-1">
+                <span class="font-impact text-3xl text-saga-orange comic-shadow-sm">SAGA</span>
+                <span class="text-saga-cyan text-sm font-semibold">.ai</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8 text-sm text-white/70">
+                <a href="#features" class="hover:text-white transition-colors">Features</a>
+                <a href="#how" class="hover:text-white transition-colors">How It Works</a>
+                <a href="#pricing" class="hover:text-white transition-colors">Pricing</a>
+            </div>
+            <a href="#waitlist" class="bg-saga-orange/20 text-saga-orange px-4 py-2 rounded-lg text-sm font-medium hover:bg-saga-orange/30 transition-colors">
+                Join Waitlist
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Background effects -->
+        <div class="absolute inset-0 speed-lines"></div>
+        <div class="absolute inset-0 hero-glow"></div>
+
+        <!-- Floating comic impacts -->
+        <span class="absolute top-32 left-[10%] font-impact text-5xl md:text-7xl text-saga-orange/20 comic-shadow float-1">POW!</span>
+        <span class="absolute top-48 right-[8%] font-impact text-4xl md:text-6xl text-saga-purple/20 comic-shadow float-2">BOOM!</span>
+        <span class="absolute bottom-32 left-[15%] font-impact text-4xl md:text-5xl text-saga-cyan/20 comic-shadow float-3">SLASH!</span>
+        <span class="absolute bottom-48 right-[12%] font-impact text-5xl md:text-6xl text-saga-yellow/20 comic-shadow float-1">KRAKOOM!</span>
+
+        <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+            <div class="mb-6">
+                <span class="inline-block bg-saga-purple/20 text-saga-purple px-4 py-1.5 rounded-full text-sm font-medium mb-6">
+                    Now in Early Access
+                </span>
+            </div>
+
+            <h1 class="font-impact text-5xl md:text-7xl lg:text-8xl comic-shadow leading-tight mb-6">
+                YOUR ADVENTURES.<br>
+                <span class="text-saga-orange">ANIMATED.</span>
+            </h1>
+
+            <p class="text-xl md:text-2xl text-white/70 max-w-2xl mx-auto mb-8 leading-relaxed">
+                Turn your TTRPG campaigns into <span class="text-saga-cyan">binge-worthy animated series</span>.
+                Describe a scene, watch it come to life with comic-book energy.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <a href="#waitlist" class="action-btn bg-gradient-to-r from-saga-orange to-saga-red px-8 py-4 rounded-xl font-semibold text-lg glow-orange inline-flex items-center justify-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    Start Creating
+                </a>
+                <a href="#how" class="glass px-8 py-4 rounded-xl font-semibold text-lg inline-flex items-center justify-center gap-2 hover:bg-white/10 transition-colors">
+                    See How It Works
+                </a>
+            </div>
+
+            <!-- Video preview mockup -->
+            <div class="relative max-w-3xl mx-auto">
+                <div class="comic-panel bg-surface rounded-2xl aspect-video flex items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-saga-orange/10 via-saga-purple/10 to-saga-cyan/10"></div>
+
+                    <!-- Mock scene -->
+                    <div class="absolute inset-4 rounded-xl border border-white/10 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-br from-saga-red/20 to-saga-orange/20"></div>
+                        <span class="absolute top-4 left-4 font-impact text-3xl text-saga-orange comic-shadow rotate-[-8deg]">WHOOSH!</span>
+                        <span class="absolute bottom-8 right-8 font-impact text-2xl text-saga-yellow comic-shadow rotate-[5deg]">CLANG!</span>
+                    </div>
+
+                    <!-- Play button -->
+                    <div class="relative z-10 w-20 h-20 rounded-full bg-saga-orange/90 flex items-center justify-center cursor-pointer hover:scale-110 transition-transform glow-orange">
+                        <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                    </div>
+
+                    <!-- Caption -->
+                    <div class="absolute bottom-4 left-4 right-4 glass rounded-lg px-4 py-2 flex items-center justify-between">
+                        <span class="text-sm text-white/70">Episode 7: Flames of Betrayal</span>
+                        <span class="text-xs text-white/50">0:47</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social proof -->
+    <section class="py-12 border-y border-white/5">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="flex flex-wrap items-center justify-center gap-8 md:gap-16 text-white/40">
+                <div class="text-center">
+                    <div class="font-impact text-3xl text-white comic-shadow-sm">2,400+</div>
+                    <div class="text-sm">Waitlist signups</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-impact text-3xl text-white comic-shadow-sm">850+</div>
+                    <div class="text-sm">Episodes generated</div>
+                </div>
+                <div class="text-center">
+                    <div class="font-impact text-3xl text-white comic-shadow-sm">12 hrs</div>
+                    <div class="text-sm">Content created</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-impact text-4xl md:text-5xl comic-shadow mb-4">LEGENDARY FEATURES</h2>
+                <p class="text-white/60 text-lg max-w-xl mx-auto">Everything you need to bring your tabletop adventures to life</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Feature 1 -->
+                <div class="feature-card glass rounded-2xl p-6 transition-all duration-300 border border-transparent">
+                    <div class="w-14 h-14 rounded-xl bg-saga-orange/20 flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-saga-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">PARTY BUILDER</h3>
+                    <p class="text-white/60">Create your characters with custom appearances, classes, and personality traits. Upload art or generate it.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card glass rounded-2xl p-6 transition-all duration-300 border border-transparent">
+                    <div class="w-14 h-14 rounded-xl bg-saga-purple/20 flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-saga-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">AI ANIMATION</h3>
+                    <p class="text-white/60">Describe what happens. Our AI generates animated sequences with comic-book energy and impact frames.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card glass rounded-2xl p-6 transition-all duration-300 border border-transparent">
+                    <div class="w-14 h-14 rounded-xl bg-saga-cyan/20 flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-saga-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m-9 0h10m-10 0L5 6m12-2l2 2M5 6v12a2 2 0 002 2h10a2 2 0 002-2V6M5 6l2 2m10-2l-2 2m-5 4v4m0-4l-3 4m3-4l3 4"/></svg>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">COMIC IMPACTS</h3>
+                    <p class="text-white/60">KRAKOOM! POW! SLASH! Every hit lands with style. Speed lines, dramatic poses, visual impact.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card glass rounded-2xl p-6 transition-all duration-300 border border-transparent">
+                    <div class="w-14 h-14 rounded-xl bg-saga-yellow/20 flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-saga-yellow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">EPIC SOUNDTRACK</h3>
+                    <p class="text-white/60">Dynamic music and sound effects. Every sword clash, spell cast, and dramatic moment sounds legendary.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card glass rounded-2xl p-6 transition-all duration-300 border border-transparent">
+                    <div class="w-14 h-14 rounded-xl bg-saga-red/20 flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-saga-red" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">EPISODE LIBRARY</h3>
+                    <p class="text-white/60">Every scene becomes an episode. Build your campaign into a binge-worthy animated series.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card glass rounded-2xl p-6 transition-all duration-300 border border-transparent">
+                    <div class="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center mb-4">
+                        <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">SHARE & FLEX</h3>
+                    <p class="text-white/60">Export, share on social, or watch together with your party. Your legendary moments deserve an audience.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="how" class="py-24 bg-surface relative overflow-hidden">
+        <div class="absolute inset-0 speed-lines opacity-50"></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="font-impact text-4xl md:text-5xl comic-shadow mb-4">HOW IT WORKS</h2>
+                <p class="text-white/60 text-lg">From imagination to animation in minutes</p>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="relative inline-block mb-6">
+                        <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-saga-orange to-saga-red flex items-center justify-center">
+                            <span class="font-impact text-4xl comic-shadow">1</span>
+                        </div>
+                        <div class="absolute -top-2 -right-2 font-impact text-lg text-saga-yellow comic-shadow rotate-12">NEW!</div>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">CREATE PARTY</h3>
+                    <p class="text-white/50 text-sm">Build your characters with unique looks and personalities</p>
+                </div>
+
+                <!-- Arrow -->
+                <div class="hidden md:flex items-center justify-center">
+                    <svg class="w-8 h-8 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center md:col-start-2">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-saga-purple to-saga-cyan mx-auto flex items-center justify-center mb-6">
+                        <span class="font-impact text-4xl comic-shadow">2</span>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">DESCRIBE SCENE</h3>
+                    <p class="text-white/50 text-sm">"We storm the castle gates as arrows rain down..."</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-saga-cyan to-saga-purple mx-auto flex items-center justify-center mb-6">
+                        <span class="font-impact text-4xl comic-shadow">3</span>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">AI GENERATES</h3>
+                    <p class="text-white/50 text-sm">Watch your scene become an animated action sequence</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="text-center">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-saga-yellow to-saga-orange mx-auto flex items-center justify-center mb-6">
+                        <span class="font-impact text-4xl comic-shadow">4</span>
+                    </div>
+                    <h3 class="font-impact text-xl comic-shadow-sm mb-2">BUILD SERIES</h3>
+                    <p class="text-white/50 text-sm">Episodes stack into your campaign's animated chronicle</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Voice options -->
+    <section class="py-24">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="font-impact text-4xl md:text-5xl comic-shadow mb-4">VOICE OPTIONS</h2>
+                <p class="text-white/60 text-lg">No crappy AI voices. Ever.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glass rounded-2xl p-8 text-center border border-saga-cyan/30">
+                    <div class="w-16 h-16 rounded-full bg-saga-cyan/20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-saga-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
+                    </div>
+                    <h3 class="font-impact text-2xl comic-shadow-sm mb-2">SILENT CINEMA</h3>
+                    <p class="text-white/60 mb-4">Music, SFX, and comic impacts tell the story. No voices needed.</p>
+                    <span class="text-saga-cyan font-medium">Included</span>
+                </div>
+
+                <div class="glass rounded-2xl p-8 text-center border border-saga-orange/30">
+                    <div class="w-16 h-16 rounded-full bg-saga-orange/20 flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-saga-orange" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"/></svg>
+                    </div>
+                    <h3 class="font-impact text-2xl comic-shadow-sm mb-2">PREMIUM VOICES</h3>
+                    <p class="text-white/60 mb-4">Professional voice actors bring your characters to life.</p>
+                    <span class="text-saga-orange font-medium">Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing teaser -->
+    <section id="pricing" class="py-24 bg-surface">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <h2 class="font-impact text-4xl md:text-5xl comic-shadow mb-4">EARLY ADVENTURER PRICING</h2>
+            <p class="text-white/60 text-lg mb-12">Join now and lock in founder rates forever</p>
+
+            <div class="glass rounded-2xl p-8 md:p-12 border border-saga-orange/20 max-w-lg mx-auto">
+                <div class="text-saga-orange text-sm font-medium mb-2">EARLY ACCESS</div>
+                <div class="flex items-baseline justify-center gap-2 mb-4">
+                    <span class="font-impact text-6xl comic-shadow">$9</span>
+                    <span class="text-white/50">/month</span>
+                </div>
+                <p class="text-white/40 text-sm mb-6 line-through">$29/month after launch</p>
+
+                <ul class="text-left space-y-3 mb-8">
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-saga-orange flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span class="text-white/70">Unlimited characters</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-saga-orange flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span class="text-white/70">30 episodes per month</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-saga-orange flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span class="text-white/70">Full campaign library</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-saga-orange flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span class="text-white/70">Export & share</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-saga-orange flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span class="text-white/70">Founder badge forever</span>
+                    </li>
+                </ul>
+
+                <a href="#waitlist" class="action-btn block w-full bg-gradient-to-r from-saga-orange to-saga-red py-4 rounded-xl font-semibold text-lg glow-orange text-center">
+                    Claim Early Access
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section id="waitlist" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 hero-glow"></div>
+
+        <div class="max-w-2xl mx-auto px-6 text-center relative z-10">
+            <span class="font-impact text-6xl text-saga-orange/20 comic-shadow absolute -top-4 left-1/2 -translate-x-1/2 float-2">HYPE!</span>
+
+            <h2 class="font-impact text-4xl md:text-5xl comic-shadow mb-4 pt-8">JOIN THE ADVENTURE</h2>
+            <p class="text-white/60 text-lg mb-8">Be first to create your animated saga</p>
+
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input
+                    type="email"
+                    placeholder="your@email.com"
+                    class="flex-1 bg-white/5 border border-white/10 rounded-xl px-5 py-4 text-white placeholder-white/30 focus:outline-none focus:border-saga-orange/50 transition-colors"
+                    required
+                >
+                <button type="submit" class="action-btn bg-gradient-to-r from-saga-orange to-saga-red px-8 py-4 rounded-xl font-semibold glow-orange whitespace-nowrap">
+                    Join Waitlist
+                </button>
+            </form>
+
+            <p class="text-white/40 text-sm mt-4">No spam. Just legendary updates.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-1">
+                    <span class="font-impact text-2xl text-saga-orange comic-shadow-sm">SAGA</span>
+                    <span class="text-saga-cyan text-xs font-semibold">.ai</span>
+                </div>
+
+                <div class="flex items-center gap-6 text-white/40 text-sm">
+                    <a href="#" class="hover:text-white transition-colors">Twitter</a>
+                    <a href="#" class="hover:text-white transition-colors">Discord</a>
+                    <a href="#" class="hover:text-white transition-colors">Terms</a>
+                    <a href="#" class="hover:text-white transition-colors">Privacy</a>
+                </div>
+
+                <div class="text-white/30 text-sm">
+                    © 2025 Saga.ai
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // GSAP animations on scroll
+        gsap.from("nav", { y: -100, opacity: 0, duration: 0.8, ease: "power2.out" });
+        gsap.from("section:first-of-type h1", { y: 50, opacity: 0, duration: 1, delay: 0.3, ease: "power2.out" });
+        gsap.from("section:first-of-type p", { y: 30, opacity: 0, duration: 0.8, delay: 0.5, ease: "power2.out" });
+        gsap.from("section:first-of-type .flex", { y: 30, opacity: 0, duration: 0.8, delay: 0.7, ease: "power2.out" });
+    </script>
+</body>
+</html>
